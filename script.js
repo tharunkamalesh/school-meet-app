@@ -121,73 +121,70 @@ function createMeeting(){
     const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
     if (isMobile) {
-        // For mobile, show instructions instead of opening in new tab
-        showMobileInstructions();
+        // For mobile, show instructions for manual link copying
+        showMobileLinkInstructions();
     } else {
-        // For desktop, open in new tab and show clear instructions
-        const meetWindow = window.open("https://meet.google.com/new", "_blank");
-        
-        // Show clear instructions to user
-        showDesktopInstructions();
+        // For desktop, open Google Meet and show link input with better instructions
+        showDesktopLinkInstructions();
+        // Open Google Meet in new tab
+        window.open("https://meet.google.com/new", "_blank");
     }
 }
 
-function showMobileInstructions() {
+function showDesktopLinkInstructions() {
     // Hide the create meeting form
     document.getElementById("createMeetingForm").style.display = "none";
     
-    // Show improved mobile instructions
+    // Show instructions for desktop users
     const meetingInfo = document.getElementById("meetingInfo");
     meetingInfo.innerHTML = `
         <div class="meeting-card">
-            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">📱 Mobile Device Detected</h3>
+            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">📋 Meeting Setup</h3>
             <div class="highlight-box">
-                <p><strong>Follow these steps:</strong></p>
+                <p><strong>Google Meet is now open in a new tab.</strong></p>
                 <ol>
-                    <li>Open the Google Meet app on your device</li>
-                    <li>Tap "New meeting" or the "+" button</li>
-                    <li>Create your meeting</li>
-                    <li>Copy the meeting link</li>
-                    <li>Return to this app and paste the link below</li>
+                    <li>Complete creating your meeting in the new tab</li>
+                    <li>Copy the meeting link from the address bar</li>
+                    <li>Paste it in the field below</li>
                 </ol>
-                <p><strong>Why do I need to paste the link?</strong><br>
-                Google Meet requires manual link sharing for security. The app cannot automatically access your meeting link.</p>
             </div>
             <div class="form-group">
-                <label for="googleMeetLink">Google Meet Link:</label>
-                <input type="text" id="googleMeetLink" placeholder="Paste the Google Meet link here" style="width: 100%; padding: 15px; margin: 10px 0;">
+                <label for="googleMeetLink">Paste Google Meet Link:</label>
+                <input type="text" id="googleMeetLink" placeholder="https://meet.google.com/xxx-xxxx-xxx" style="width: 100%; padding: 15px; margin: 10px 0;">
             </div>
-            <button onclick="processGoogleMeetLink()" style="background: #4CAF50;">✅ Process Link</button>
+            <button onclick="processGoogleMeetLink()" style="background: #4CAF50;">✅ Display Meeting Info</button>
             <button onclick="resetToMain()" style="background: #f44336; margin-left: 10px;">Cancel</button>
         </div>
     `;
     meetingInfo.style.display = "block";
 }
 
-function showDesktopInstructions() {
+function showMobileLinkInstructions() {
     // Hide the create meeting form
     document.getElementById("createMeetingForm").style.display = "none";
     
-    // Show desktop instructions with better explanation
+    // Show instructions for mobile users
     const meetingInfo = document.getElementById("meetingInfo");
     meetingInfo.innerHTML = `
         <div class="meeting-card">
-            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">📋 Next Steps</h3>
+            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">📱 Mobile Meeting Setup</h3>
             <div class="highlight-box">
-                <p><strong>Google Meet is now open in a new tab.</strong></p>
+                <p><strong>Please follow these steps:</strong></p>
                 <ol>
-                    <li>Complete creating your meeting in the new tab</li>
-                    <li>Once created, copy the meeting link from the address bar</li>
-                    <li>Paste the link below to finish setup</li>
+                    <li>Open the Google Meet app</li>
+                    <li>Create a new meeting</li>
+                    <li>Copy the meeting link from the app</li>
+                    <li>Return here and paste the link below</li>
                 </ol>
-                <p><strong>Why do I need to paste the link?</strong><br>
-                Google Meet requires manual link sharing for security. The app cannot automatically access your meeting link.</p>
+                <p style="text-align: center; font-weight: bold; color: #FF9800;">
+                    The meeting link must be copied manually from the Google Meet app
+                </p>
             </div>
             <div class="form-group">
-                <label for="googleMeetLink">Google Meet Link:</label>
-                <input type="text" id="googleMeetLink" placeholder="Paste the Google Meet link here" style="width: 100%; padding: 15px; margin: 10px 0;">
+                <label for="googleMeetLink">Paste Google Meet Link:</label>
+                <input type="text" id="googleMeetLink" placeholder="https://meet.google.com/xxx-xxxx-xxx" style="width: 100%; padding: 15px; margin: 10px 0;">
             </div>
-            <button onclick="processGoogleMeetLink()" style="background: #4CAF50;">✅ Process Link</button>
+            <button onclick="processGoogleMeetLink()" style="background: #4CAF50;">✅ Display Meeting Info</button>
             <button onclick="resetToMain()" style="background: #f44336; margin-left: 10px;">Cancel</button>
         </div>
     `;
@@ -221,7 +218,7 @@ function processGoogleMeetLink() {
     // Enhanced display of meeting info with better formatting
     document.getElementById("meetingInfo").innerHTML = `
         <div class="meeting-card">
-            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">✅ Meeting Created Successfully</h3>
+            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">✅ Meeting Ready</h3>
             
             <div class="highlight-box">
                 <p style="margin: 5px 0;"><strong>Host:</strong> ${userName}</p>
@@ -248,6 +245,11 @@ function processGoogleMeetLink() {
     window.generatedId = meetId;
     window.meetingHost = userName;
     window.meetingRole = selectedRole;
+    
+    // Automatically open the meeting in a new tab
+    setTimeout(() => {
+        openMeetingLink(link);
+    }, 2000); // Open after 2 seconds
 }
 
 function startMeetingTimer() {
