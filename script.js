@@ -177,20 +177,28 @@ function processGoogleMeetLink() {
     const userName = document.getElementById("userName").value;
     const meetingType = document.getElementById("meetingType").value;
     
-    // Display meeting info
+    // Enhanced display of meeting info with better formatting
     document.getElementById("meetingInfo").innerHTML = `
-        <p><b style="color: #4CAF50;">✅ Meeting Created Successfully</b></p>
-        <div class="meeting-info">
-            <p><b>Host:</b> <span id="hostName">${userName}</span></p>
-            <p><b>Role:</b> <span id="hostRole">${selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1)}</span></p>
-            <p><b>Meeting Type:</b> <span id="meetType">${meetingType}</span></p>
-            <p><b>Meeting Link:</b> <span id="meetLink">${link}</span></p>
-            <p><b>Meeting ID:</b> <span id="meetId">${meetId}</span></p>
-        </div>
-        <div class="action-buttons">
-            <button onclick="copyLink()" style="background: #2196F3;">📋 Copy Link</button>
-            <button onclick="openMeetingLink('${link}')" style="background: #FF9800;">🚀 Join Meeting</button>
-            <button onclick="hideCreateOptions()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
+        <div class="meeting-card">
+            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">✅ Meeting Created Successfully</h3>
+            
+            <div class="highlight-box">
+                <p style="margin: 5px 0;"><strong>Host:</strong> ${userName}</p>
+                <p style="margin: 5px 0;"><strong>Role:</strong> ${selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1)}</p>
+                <p style="margin: 5px 0;"><strong>Type:</strong> ${meetingType}</p>
+            </div>
+            
+            <p style="text-align: center; margin: 20px 0 10px 0; color: #555;"><strong>Meeting ID</strong></p>
+            <div class="meeting-id-display" id="meetIdDisplay">${meetId}</div>
+            
+            <p style="text-align: center; margin: 20px 0 10px 0; color: #555;"><strong>Meeting Link</strong></p>
+            <div class="meeting-link-display" id="meetLinkDisplay">${link}</div>
+            
+            <div class="action-buttons">
+                <button onclick="copyLink()" style="background: #2196F3;">📋 Copy Link</button>
+                <button onclick="openMeetingLink('${link}')" style="background: #FF9800;">🚀 Join Meeting</button>
+                <button onclick="hideCreateOptions()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
+            </div>
         </div>
     `;
     
@@ -273,17 +281,34 @@ function joinMeeting(){
         meetLink = "https://meet.google.com/" + link.replace("https://meet.google.com/", "");
     }
     
-    // Show confirmation
+    // Extract meeting ID for display
+    let meetId = "";
+    if (meetLink.includes("/")) {
+        meetId = meetLink.split("/").pop().split("?")[0];
+    } else {
+        meetId = meetLink.split("?")[0];
+    }
+    
+    // Enhanced display for joining meeting
     const meetingInfo = document.getElementById("meetingInfo");
     meetingInfo.innerHTML = `
-        <p><b style="color: #4CAF50;">✅ Joining Meeting</b></p>
-        <div class="meeting-info">
-            <p><b>Role:</b> <span id="joinRole">${selectedJoinRole.charAt(0).toUpperCase() + selectedJoinRole.slice(1)}</span></p>
-            <p><b>Meeting Link:</b> <span id="joinLinkDisplay">${meetLink}</span></p>
-        </div>
-        <div class="action-buttons">
-            <button onclick="openMeetingLink('${meetLink}')" style="background: #4CAF50;">🚀 Join Meeting Now</button>
-            <button onclick="hideJoinBox()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
+        <div class="meeting-card">
+            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">✅ Joining Meeting</h3>
+            
+            <div class="highlight-box">
+                <p style="margin: 5px 0;"><strong>Role:</strong> ${selectedJoinRole.charAt(0).toUpperCase() + selectedJoinRole.slice(1)}</p>
+            </div>
+            
+            <p style="text-align: center; margin: 20px 0 10px 0; color: #555;"><strong>Meeting ID</strong></p>
+            <div class="meeting-id-display" id="joinMeetIdDisplay">${meetId}</div>
+            
+            <p style="text-align: center; margin: 20px 0 10px 0; color: #555;"><strong>Meeting Link</strong></p>
+            <div class="meeting-link-display" id="joinLinkDisplay">${meetLink}</div>
+            
+            <div class="action-buttons">
+                <button onclick="openMeetingLink('${meetLink}')" style="background: #4CAF50;">🚀 Join Meeting Now</button>
+                <button onclick="hideJoinBox()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
+            </div>
         </div>
     `;
     

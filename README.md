@@ -10,6 +10,7 @@ A responsive web application for creating and joining meetings with Google Meet 
 - Responsive design for mobile, tablet, and desktop
 - Automatic meeting link extraction and display
 - Copy meeting links with one click
+- **Enhanced meeting ID and link visualization**
 
 ## How to Use
 
@@ -19,12 +20,14 @@ A responsive web application for creating and joining meetings with Google Meet 
    - Choose meeting type
    - Click "Create Meeting" to open Google Meet
    - Copy the generated Google Meet link and paste it back in the app
+   - **The app now prominently displays the meeting ID and link for easy sharing**
 
 2. **Join a Meeting**:
    - Click "Join Meeting"
    - Enter the meeting link or ID
    - Select your role
    - Click "Join Meeting" to open the meeting
+   - **Meeting ID and link are clearly displayed before joining**
 
 ## Technologies Used
 
