@@ -89,14 +89,50 @@ function createMeeting(){
         return;
     }
     
-    // Open Google Meet in a new tab
-    const meetWindow = window.open("https://meet.google.com/new", "_blank");
+    // Check if user is on mobile device
+    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
-    // Show instructions to user
-    alert("Google Meet is opening in a new tab. Please wait for the meeting to be created, then copy the meeting link and paste it in the input field that will appear.");
+    if (isMobile) {
+        // For mobile, show instructions instead of opening in new tab
+        showMobileInstructions();
+    } else {
+        // For desktop, open in new tab as before
+        const meetWindow = window.open("https://meet.google.com/new", "_blank");
+        
+        // Show instructions to user
+        alert("Google Meet is opening in a new tab. Please wait for the meeting to be created, then copy the meeting link and paste it in the input field that will appear.");
+        
+        // Show link input field
+        showLinkInput();
+    }
+}
+
+function showMobileInstructions() {
+    // Hide the create meeting form
+    document.getElementById("createMeetingForm").style.display = "none";
     
-    // Show link input field
-    showLinkInput();
+    // Show mobile instructions
+    const meetingInfo = document.getElementById("meetingInfo");
+    meetingInfo.innerHTML = `
+        <p><b style="color: #4CAF50;">📱 Mobile Device Detected</b></p>
+        <div class="meeting-info">
+            <p>To create a Google Meet:</p>
+            <ol>
+                <li>Open the Google Meet app on your device</li>
+                <li>Tap "New meeting" or the "+" button</li>
+                <li>Create your meeting</li>
+                <li>Copy the meeting link</li>
+                <li>Return to this app and paste the link below</li>
+            </ol>
+        </div>
+        <div class="form-group">
+            <label for="googleMeetLink">Google Meet Link:</label>
+            <input type="text" id="googleMeetLink" placeholder="Paste the Google Meet link here" style="width: 100%; padding: 15px; margin: 10px 0;">
+        </div>
+        <button onclick="processGoogleMeetLink()">Process Link</button>
+        <button onclick="hideCreateOptions()" style="background: #f44336; margin-left: 10px;">Cancel</button>
+    `;
+    meetingInfo.style.display = "block";
 }
 
 function showLinkInput() {
@@ -153,7 +189,7 @@ function processGoogleMeetLink() {
         </div>
         <div class="action-buttons">
             <button onclick="copyLink()" style="background: #2196F3;">📋 Copy Link</button>
-            <button onclick="startMeet()" style="background: #FF9800;">🚀 Start Meeting</button>
+            <button onclick="openMeetingLink('${link}')" style="background: #FF9800;">🚀 Join Meeting</button>
             <button onclick="hideCreateOptions()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
         </div>
     `;
@@ -200,9 +236,22 @@ function copyLink(){
     }
 }
 
+function openMeetingLink(link) {
+    // Check if user is on mobile device
+    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // For mobile, try to open in browser first, then app
+        window.open(link, "_blank");
+    } else {
+        // For desktop, open in new tab
+        window.open(link, "_blank");
+    }
+}
+
 function startMeet(){
     if (window.generatedLink) {
-        window.open(window.generatedLink, "_blank");
+        openMeetingLink(window.generatedLink);
     }
 }
 
@@ -224,8 +273,6 @@ function joinMeeting(){
         meetLink = "https://meet.google.com/" + link.replace("https://meet.google.com/", "");
     }
     
-    window.open(meetLink, "_blank");
-    
     // Show confirmation
     const meetingInfo = document.getElementById("meetingInfo");
     meetingInfo.innerHTML = `
@@ -234,7 +281,10 @@ function joinMeeting(){
             <p><b>Role:</b> <span id="joinRole">${selectedJoinRole.charAt(0).toUpperCase() + selectedJoinRole.slice(1)}</span></p>
             <p><b>Meeting Link:</b> <span id="joinLinkDisplay">${meetLink}</span></p>
         </div>
-        <button onclick="hideJoinBox()" style="background: #f44336; width: 100%; margin-top: 20px;">Close</button>
+        <div class="action-buttons">
+            <button onclick="openMeetingLink('${meetLink}')" style="background: #4CAF50;">🚀 Join Meeting Now</button>
+            <button onclick="hideJoinBox()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
+        </div>
     `;
     
     // Hide join box and show meeting info
