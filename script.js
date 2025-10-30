@@ -45,8 +45,22 @@ function hideCreateOptions(){
     // Hide create meeting form
     document.getElementById("createMeetingForm").style.display = "none";
     
+    // Also hide meeting info if it was shown
+    document.getElementById("meetingInfo").style.display = "none";
+    
     // Show main buttons
     document.querySelector('.main-buttons').style.display = "flex";
+    
+    // Reset form values
+    document.getElementById("userName").value = "";
+    document.getElementById("googleMeetLink").value = "";
+    selectedRole = '';
+    
+    // Reset role selection UI
+    const roleOptions = document.querySelectorAll('#createMeetingForm .role-option');
+    roleOptions.forEach(option => {
+        option.classList.remove('selected');
+    });
 }
 
 function showJoinBox(){
@@ -71,8 +85,22 @@ function hideJoinBox(){
     // Hide join box
     document.getElementById("joinBox").style.display = "none";
     
+    // Also hide meeting info if it was shown
+    document.getElementById("meetingInfo").style.display = "none";
+    
     // Show main buttons
     document.querySelector('.main-buttons').style.display = "flex";
+    
+    // Reset form values
+    document.getElementById("joinLink").value = "";
+    document.getElementById("googleMeetLink").value = "";
+    selectedJoinRole = '';
+    
+    // Reset role selection UI
+    const roleOptions = document.querySelectorAll('#joinBox .role-option');
+    roleOptions.forEach(option => {
+        option.classList.remove('selected');
+    });
 }
 
 function createMeeting(){
@@ -130,7 +158,7 @@ function showMobileInstructions() {
             <input type="text" id="googleMeetLink" placeholder="Paste the Google Meet link here" style="width: 100%; padding: 15px; margin: 10px 0;">
         </div>
         <button onclick="processGoogleMeetLink()">Process Link</button>
-        <button onclick="hideCreateOptions()" style="background: #f44336; margin-left: 10px;">Cancel</button>
+        <button onclick="resetToMain()" style="background: #f44336; margin-left: 10px;">Cancel</button>
     `;
     meetingInfo.style.display = "block";
 }
@@ -148,7 +176,7 @@ function showLinkInput() {
             <input type="text" id="googleMeetLink" placeholder="Paste the Google Meet link here" style="width: 100%; padding: 15px; margin: 10px 0;">
         </div>
         <button onclick="processGoogleMeetLink()">Process Link</button>
-        <button onclick="hideCreateOptions()" style="background: #f44336; margin-left: 10px;">Cancel</button>
+        <button onclick="resetToMain()" style="background: #f44336; margin-left: 10px;">Cancel</button>
     `;
     meetingInfo.style.display = "block";
 }
@@ -197,7 +225,7 @@ function processGoogleMeetLink() {
             <div class="action-buttons">
                 <button onclick="copyLink()" style="background: #2196F3;">📋 Copy Link</button>
                 <button onclick="openMeetingLink('${link}')" style="background: #FF9800;">🚀 Join Meeting</button>
-                <button onclick="hideCreateOptions()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
+                <button onclick="resetToMain()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
             </div>
         </div>
     `;
@@ -307,7 +335,7 @@ function joinMeeting(){
             
             <div class="action-buttons">
                 <button onclick="openMeetingLink('${meetLink}')" style="background: #4CAF50;">🚀 Join Meeting Now</button>
-                <button onclick="hideJoinBox()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
+                <button onclick="resetToMain()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
             </div>
         </div>
     `;
@@ -315,4 +343,33 @@ function joinMeeting(){
     // Hide join box and show meeting info
     document.getElementById("joinBox").style.display = "none";
     meetingInfo.style.display = "block";
+}
+
+// New function to reset to main screen
+function resetToMain() {
+    // Hide all forms and info
+    document.getElementById("createMeetingForm").style.display = "none";
+    document.getElementById("joinBox").style.display = "none";
+    document.getElementById("meetingInfo").style.display = "none";
+    
+    // Show main buttons
+    document.querySelector('.main-buttons').style.display = "flex";
+    
+    // Reset all form values
+    document.getElementById("userName").value = "";
+    document.getElementById("joinLink").value = "";
+    document.getElementById("googleMeetLink").value = "";
+    selectedRole = '';
+    selectedJoinRole = '';
+    
+    // Reset role selection UI
+    const createRoleOptions = document.querySelectorAll('#createMeetingForm .role-option');
+    createRoleOptions.forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    const joinRoleOptions = document.querySelectorAll('#joinBox .role-option');
+    joinRoleOptions.forEach(option => {
+        option.classList.remove('selected');
+    });
 }
