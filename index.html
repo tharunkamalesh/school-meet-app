@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECHO-FIVE MEET</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+body { 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  padding: 20px; 
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  padding: 25px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  margin: 20px auto;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 26px;
+}
+
+.main-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 15px 20px;
+  margin: 8px 0;
+  cursor: pointer;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+  background: #45a049;
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+input, select {
+  padding: 14px;
+  width: calc(100% - 28px);
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+#meetingOptions, #meetingInfo, #joinBox, #createMeetingForm {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  display: none;
+  text-align: left;
+}
+
+.meeting-type-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.meeting-info p {
+  margin: 12px 0;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 16px;
+}
+
+.meeting-info p:last-child {
+  border-bottom: none;
+}
+
+.meeting-info b {
+  color: #333;
+  display: inline-block;
+  width: 120px;
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.action-buttons button {
+  flex: 1;
+  margin: 5px;
+  min-width: 120px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+  font-size: 16px;
+}
+
+.role-selection {
+  display: flex;
+  justify-content: space-around;
+  margin: 15px 0;
+  gap: 10px;
+}
+
+.role-option {
+  text-align: center;
+  padding: 15px 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #eee;
+  flex: 1;
+  transition: all 0.3s;
+  font-size: 14px;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.role-option.selected {
+  background: #4CAF50;
+  color: white;
+  transform: scale(1.03);
+}
+
+.role-option input {
+  display: none;
+}
+
+.timer {
+  color: #f44336;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    padding: 30px;
+    max-width: 600px;
+  }
+  
+  h2 {
+    font-size: 28px;
+  }
+  
+  .role-option {
+    font-size: 16px;
+    padding: 20px 10px;
+  }
+  
+  .action-buttons button {
+    min-width: 140px;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1025px) {
+  body {
+    padding: 30px;
+  }
+  
+  .container {
+    padding: 35px;
+    max-width: 650px;
+  }
+  
+  h2 {
+    font-size: 30px;
+  }
+  
+  .role-selection {
+    gap: 15px;
+  }
+  
+  .role-option {
+    font-size: 16px;
+    padding: 25px 15px;
+  }
+  
+  .action-buttons {
+    gap: 15px;
+  }
+  
+  .action-buttons button {
+    min-width: 150px;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+  body {
+    padding: 15px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    padding: 14px 15px;
+    font-size: 15px;
+  }
+  
+  input, select {
+    padding: 12px;
+    font-size: 15px;
+  }
+  
+  .form-group label {
+    font-size: 15px;
+  }
+  
+  .role-option {
+    font-size: 13px;
+    padding: 12px 5px;
+    min-height: 50px;
+  }
+  
+  .meeting-info p {
+    font-size: 15px;
+  }
+  
+  .meeting-info b {
+    width: 100px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 360px) {
+  body {
+    padding: 10px;
+  }
+  
+  .container {
+    padding: 15px;
+  }
+  
+  h2 {
+    font-size: 22px;
+  }
+  
+  button {
+    padding: 12px 10px;
+    font-size: 14px;
+  }
+  
+  input, select {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+  }
+  
+  .role-option {
+    font-size: 12px;
+    padding: 10px 3px;
+    min-height: 45px;
+  }
+  
+  .meeting-info b {
+    width: 90px;
+  }
+}
+
+/* Large Screen */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 700px;
+    padding: 40px;
+  }
+  
+  h2 {
+    font-size: 32px;
+  }
+  
+  button {
+    padding: 18px 25px;
+    font-size: 18px;
+  }
+  
+  input, select {
+    padding: 16px;
+    font-size: 17px;
+  }
+  
+  .form-group label {
+    font-size: 17px;
+  }
+  
+  .role-option {
+    font-size: 17px;
+    padding: 30px 20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>🎤 ECHO-FIVE MEET</h2>
+
+  <div class="main-buttons">
+    <button onclick="showCreateOptions()">➕ Create Meeting</button>
+    <button onclick="showJoinBox()">🔗 Join Meeting</button>
+  </div>
+
+  <div id="createMeetingForm">
+    <h3>Create New Meeting</h3>
+    <div class="form-group">
+      <label for="userName">Your Name:</label>
+      <input type="text" id="userName" placeholder="Enter your full name">
+    </div>
+    
+    <div class="form-group">
+      <label>Select Role:</label>
+      <div class="role-selection">
+        <div class="role-option" onclick="selectRole('teacher')">
+          👩‍🏫 Teacher
+        </div>
+        <div class="role-option" onclick="selectRole('parent')">
+          👨‍👩‍👧 Parent
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="meetingType">Meeting Type:</label>
+      <select id="meetingType">
+        <option value="One to One Meeting">👤 One-to-One Meeting</option>
+        <option value="Parent-Teacher Meeting">👨‍👩‍👧 Parent-Teacher Meeting</option>
+      </select>
+    </div>
+    
+    <button onclick="createMeeting()">Create Meeting</button>
+    <button onclick="hideCreateOptions()" style="background: #f44336;">Cancel</button>
+  </div>
+
+  <div id="joinBox">
+    <h3>Join Existing Meeting</h3>
+    <div class="form-group">
+      <label for="joinLink">Meeting Link or ID:</label>
+      <input type="text" id="joinLink" placeholder="Paste Meeting Link or ID">
+    </div>
+    
+    <div class="form-group">
+      <label>Your Role:</label>
+      <div class="role-selection">
+        <div class="role-option" onclick="selectJoinRole('teacher')">
+          👩‍🏫 Teacher
+        </div>
+        <div class="role-option" onclick="selectJoinRole('parent')">
+          👨‍👩‍👧 Parent
+        </div>
+      </div>
+    </div>
+    
+    <button onclick="joinMeeting()">Join Meeting</button>
+    <button onclick="hideJoinBox()" style="background: #f44336;">Cancel</button>
+  </div>
+
+  <div id="meetingInfo">
+    <!-- This will be populated by JavaScript -->
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
