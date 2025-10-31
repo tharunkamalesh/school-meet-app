@@ -16,6 +16,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: gradientShift 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .container {
@@ -27,12 +35,50 @@ body {
   max-width: 500px;
   text-align: center;
   margin: 20px auto;
+  transform: translateY(0);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 1;
+}
+
+.container.fade-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h2 {
   color: #333;
   margin-bottom: 25px;
   font-size: 26px;
+  position: relative;
+  display: inline-block;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #4CAF50, #45a049);
+  border-radius: 3px;
+  animation: underlineExpand 1s ease-out;
+}
+
+@keyframes underlineExpand {
+  from { width: 0; }
+  to { width: 50px; }
 }
 
 .main-buttons {
@@ -46,25 +92,42 @@ button {
   padding: 15px 20px;
   margin: 8px 0;
   cursor: pointer;
-  background: #4CAF50;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: 0.5s;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-  background: #45a049;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+button:hover::before {
+  left: 100%;
 }
 
 button:active {
   transform: translateY(0);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 input, select {
@@ -74,13 +137,17 @@ input, select {
   border-radius: 8px;
   border: 2px solid #ddd;
   font-size: 16px;
-  transition: border-color 0.3s;
+  transition: all 0.3s ease;
   box-sizing: border-box;
+  background: #fafafa;
 }
 
 input:focus, select:focus {
   outline: none;
   border-color: #4CAF50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  background: white;
+  transform: scale(1.01);
 }
 
 #meetingOptions, #meetingInfo, #joinBox, #createMeetingForm {
@@ -91,6 +158,18 @@ input:focus, select:focus {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
   display: none;
   text-align: left;
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .meeting-type-buttons {
@@ -104,6 +183,12 @@ input:focus, select:focus {
   padding: 8px 0;
   border-bottom: 1px solid #eee;
   font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.meeting-info p:hover {
+  background-color: #f0f0f0;
+  border-radius: 4px;
 }
 
 .meeting-info p:last-child {
@@ -132,6 +217,7 @@ input:focus, select:focus {
 
 .form-group {
   margin-bottom: 15px;
+  position: relative;
 }
 
 .form-group label {
@@ -140,6 +226,11 @@ input:focus, select:focus {
   font-weight: bold;
   color: #555;
   font-size: 16px;
+  transition: color 0.3s;
+}
+
+.form-group:focus-within label {
+  color: #4CAF50;
 }
 
 .role-selection {
@@ -156,19 +247,43 @@ input:focus, select:focus {
   cursor: pointer;
   background: #eee;
   flex: 1;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   font-size: 14px;
   min-height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.role-option::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.role-option:hover::after {
+  transform: translateX(0);
 }
 
 .role-option.selected {
-  background: #4CAF50;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
   color: white;
-  transform: scale(1.03);
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.role-option.selected::after {
+  background: rgba(255,255,255,0.2);
 }
 
 .role-option input {
@@ -181,6 +296,104 @@ input:focus, select:focus {
   font-size: 18px;
   margin-top: 10px;
   text-align: center;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Added styles for better meeting info display */
+.meeting-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    padding: 25px;
+    margin: 20px 0;
+    border-left: 5px solid #4CAF50;
+    animation: cardAppear 0.5s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.meeting-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #4CAF50, #45a049);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: progressBar 1s ease-out forwards;
+}
+
+@keyframes progressBar {
+  to { transform: scaleX(1); }
+}
+
+.meeting-id-display {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    padding: 15px;
+    background: #e8f5e9;
+    border-radius: 8px;
+    margin: 15px 0;
+    word-break: break-all;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.meeting-id-display:hover {
+  background: #d1e7d5;
+  transform: scale(1.02);
+}
+
+.meeting-link-display {
+    font-size: 16px;
+    color: #555;
+    padding: 15px;
+    background: #f1f8e9;
+    border-radius: 8px;
+    margin: 15px 0;
+    word-break: break-all;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.meeting-link-display:hover {
+  background: #e1eed2;
+  transform: scale(1.01);
+}
+
+.highlight-box {
+    background: #fff3e0;
+    border-left: 4px solid #ff9800;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.highlight-box:hover {
+  background: #ffe9c7;
+  transform: translateX(5px);
 }
 
 /* Tablet Styles */
@@ -350,46 +563,6 @@ input:focus, select:focus {
     padding: 30px 20px;
   }
 }
-
-/* Added styles for better meeting info display */
-.meeting-card {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-    padding: 25px;
-    margin: 20px 0;
-    border-left: 5px solid #4CAF50;
-}
-
-.meeting-id-display {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-    padding: 15px;
-    background: #e8f5e9;
-    border-radius: 8px;
-    margin: 15px 0;
-    word-break: break-all;
-}
-
-.meeting-link-display {
-    font-size: 16px;
-    color: #555;
-    padding: 15px;
-    background: #f1f8e9;
-    border-radius: 8px;
-    margin: 15px 0;
-    word-break: break-all;
-}
-
-.highlight-box {
-    background: #fff3e0;
-    border-left: 4px solid #ff9800;
-    padding: 15px;
-    border-radius: 6px;
-    margin: 15px 0;
-}
 </style>
 </head>
 <body>
@@ -430,7 +603,7 @@ input:focus, select:focus {
     </div>
     
     <button onclick="createMeeting()">Create Meeting</button>
-    <button onclick="hideCreateOptions()" style="background: #f44336;">Cancel</button>
+    <button onclick="hideCreateOptions()" style="background: linear-gradient(135deg, #f44336, #d32f2f);">Cancel</button>
   </div>
 
   <div id="joinBox">
@@ -453,7 +626,7 @@ input:focus, select:focus {
     </div>
     
     <button onclick="joinMeeting()">Join Meeting</button>
-    <button onclick="hideJoinBox()" style="background: #f44336;">Cancel</button>
+    <button onclick="hideJoinBox()" style="background: linear-gradient(135deg, #f44336, #d32f2f);">Cancel</button>
   </div>
 
   <div id="meetingInfo">

@@ -29,8 +29,13 @@ function showCreateOptions(){
     document.getElementById("joinBox").style.display = "none";
     document.getElementById("meetingInfo").style.display = "none";
     
-    // Show create meeting form
-    document.getElementById("createMeetingForm").style.display = "block";
+    // Show create meeting form with animation
+    const form = document.getElementById("createMeetingForm");
+    form.style.display = "block";
+    form.style.animation = "none";
+    setTimeout(() => {
+        form.style.animation = "slideIn 0.4s ease-out";
+    }, 10);
     
     // Reset form
     document.getElementById("userName").value = "";
@@ -48,8 +53,13 @@ function hideCreateOptions(){
     // Also hide meeting info if it was shown
     document.getElementById("meetingInfo").style.display = "none";
     
-    // Show main buttons
-    document.querySelector('.main-buttons').style.display = "flex";
+    // Show main buttons with animation
+    const buttons = document.querySelector('.main-buttons');
+    buttons.style.display = "flex";
+    buttons.classList.add('fade-in');
+    setTimeout(() => {
+        buttons.classList.remove('fade-in');
+    }, 600);
     
     // Reset form values
     document.getElementById("userName").value = "";
@@ -69,8 +79,13 @@ function showJoinBox(){
     document.getElementById("createMeetingForm").style.display = "none";
     document.getElementById("meetingInfo").style.display = "none";
     
-    // Show join box
-    document.getElementById("joinBox").style.display = "block";
+    // Show join box with animation
+    const box = document.getElementById("joinBox");
+    box.style.display = "block";
+    box.style.animation = "none";
+    setTimeout(() => {
+        box.style.animation = "slideIn 0.4s ease-out";
+    }, 10);
     
     // Reset form
     document.getElementById("joinLink").value = "";
@@ -88,8 +103,13 @@ function hideJoinBox(){
     // Also hide meeting info if it was shown
     document.getElementById("meetingInfo").style.display = "none";
     
-    // Show main buttons
-    document.querySelector('.main-buttons').style.display = "flex";
+    // Show main buttons with animation
+    const buttons = document.querySelector('.main-buttons');
+    buttons.style.display = "flex";
+    buttons.classList.add('fade-in');
+    setTimeout(() => {
+        buttons.classList.remove('fade-in');
+    }, 600);
     
     // Reset form values
     document.getElementById("joinLink").value = "";
@@ -120,7 +140,7 @@ function createMeeting(){
     // Directly open Google Meet create-meeting screen for both desktop and mobile
     window.open("https://meet.google.com/new", "_blank");
     
-    // Show a simple confirmation message
+    // Show a simple confirmation message with animation
     document.getElementById("createMeetingForm").style.display = "none";
     const meetingInfo = document.getElementById("meetingInfo");
     meetingInfo.innerHTML = `
@@ -137,64 +157,14 @@ function createMeeting(){
                     Use the <strong>"Join Meeting"</strong> button on the home page to join meetings.
                 </p>
             </div>
-            <button onclick="resetToMain()" style="background: #4CAF50; width: 100%;">OK</button>
+            <button onclick="resetToMain()" style="background: linear-gradient(135deg, #4CAF50, #45a049); width: 100%;">OK</button>
         </div>
     `;
     meetingInfo.style.display = "block";
-}
-
-function startMeetingTimer() {
-    clearInterval(meetingTimer);
-    
-    meetingTimer = setInterval(function() {
-        timeLeft--;
-        
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        
-        document.getElementById("timer").innerText = 
-            minutes.toString().padStart(2, '0') + ':' + 
-            seconds.toString().padStart(2, '0');
-        
-        // Change color when less than 2 minutes left
-        if (timeLeft < 120) {
-            document.getElementById("timer").style.color = "#f44336";
-        }
-        
-        // Expire meeting when time is up
-        if (timeLeft <= 0) {
-            clearInterval(meetingTimer);
-            document.getElementById("timer").innerText = "EXPIRED";
-            document.getElementById("timer").style.color = "#f44336";
-            alert("Meeting link has expired!");
-        }
-    }, 1000);
-}
-
-function copyLink(){
-    if (window.generatedLink) {
-        navigator.clipboard.writeText(window.generatedLink);
-        alert("Link Copied ✅");
-    }
-}
-
-function openMeetingLink(link) {
-    // Check if user is on mobile device
-    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    if (isMobile) {
-        // For mobile, try to open in browser first, then app
-        window.open(link, "_blank");
-    } else {
-        // For desktop, open in new tab
-        window.open(link, "_blank");
-    }
-}
-
-function startMeet(){
-    if (window.generatedLink) {
-        openMeetingLink(window.generatedLink);
-    }
+    meetingInfo.style.animation = "none";
+    setTimeout(() => {
+        meetingInfo.style.animation = "slideIn 0.4s ease-out";
+    }, 10);
 }
 
 function joinMeeting(){
@@ -223,7 +193,7 @@ function joinMeeting(){
         meetId = meetLink.split("?")[0];
     }
     
-    // Enhanced display for joining meeting
+    // Enhanced display for joining meeting with animation
     const meetingInfo = document.getElementById("meetingInfo");
     meetingInfo.innerHTML = `
         <div class="meeting-card">
@@ -240,15 +210,19 @@ function joinMeeting(){
             <div class="meeting-link-display" id="joinLinkDisplay">${meetLink}</div>
             
             <div class="action-buttons">
-                <button onclick="openMeetingLink('${meetLink}')" style="background: #4CAF50;">🚀 Join Meeting Now</button>
-                <button onclick="resetToMain()" style="background: #f44336; width: 100%; margin-top: 10px;">Close</button>
+                <button onclick="openMeetingLink('${meetLink}')" style="background: linear-gradient(135deg, #4CAF50, #45a049);">🚀 Join Meeting Now</button>
+                <button onclick="resetToMain()" style="background: linear-gradient(135deg, #f44336, #d32f2f); width: 100%; margin-top: 10px;">Close</button>
             </div>
         </div>
     `;
     
-    // Hide join box and show meeting info
+    // Hide join box and show meeting info with animation
     document.getElementById("joinBox").style.display = "none";
     meetingInfo.style.display = "block";
+    meetingInfo.style.animation = "none";
+    setTimeout(() => {
+        meetingInfo.style.animation = "slideIn 0.4s ease-out";
+    }, 10);
 }
 
 // New function to reset to main screen
@@ -258,8 +232,13 @@ function resetToMain() {
     document.getElementById("joinBox").style.display = "none";
     document.getElementById("meetingInfo").style.display = "none";
     
-    // Show main buttons
-    document.querySelector('.main-buttons').style.display = "flex";
+    // Show main buttons with animation
+    const buttons = document.querySelector('.main-buttons');
+    buttons.style.display = "flex";
+    buttons.classList.add('fade-in');
+    setTimeout(() => {
+        buttons.classList.remove('fade-in');
+    }, 600);
     
     // Reset all form values
     document.getElementById("userName").value = "";
