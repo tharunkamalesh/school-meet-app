@@ -121,14 +121,53 @@ function createMeeting(){
     const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
     if (isMobile) {
-        // For mobile, show instructions for manual link copying
-        showMobileLinkInstructions();
+        // For mobile, directly open Google Meet app and then show link input
+        openGoogleMeetApp();
     } else {
-        // For desktop, open Google Meet and show link input with better instructions
+        // For desktop, open Google Meet in new tab and show instructions
         showDesktopLinkInstructions();
         // Open Google Meet in new tab
         window.open("https://meet.google.com/new", "_blank");
     }
+}
+
+function openGoogleMeetApp() {
+    // Hide the create meeting form
+    document.getElementById("createMeetingForm").style.display = "none";
+    
+    // Try to open Google Meet app directly
+    // This will attempt to open the Google Meet app or fall back to browser
+    window.open("https://meet.google.com/new", "_blank");
+    
+    // Show the link input screen immediately
+    setTimeout(() => {
+        showMobileLinkInput();
+    }, 1000);
+}
+
+function showMobileLinkInput() {
+    // Show link input for mobile users
+    const meetingInfo = document.getElementById("meetingInfo");
+    meetingInfo.innerHTML = `
+        <div class="meeting-card">
+            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">📋 Paste Meeting Link</h3>
+            <div class="highlight-box">
+                <p><strong>Next steps:</strong></p>
+                <ol>
+                    <li>Create a new meeting in Google Meet app</li>
+                    <li>Copy the meeting link from the app</li>
+                    <li>Paste it in the field below</li>
+                </ol>
+            </div>
+            <div class="form-group">
+                <label for="googleMeetLink">Paste Google Meet Link:</label>
+                <input type="text" id="googleMeetLink" placeholder="https://meet.google.com/xxx-xxxx-xxx" style="width: 100%; padding: 15px; margin: 10px 0;">
+            </div>
+            <button onclick="processGoogleMeetLink()" style="background: #4CAF50;">✅ Display Meeting Info</button>
+            <button onclick="resetToMain()" style="background: #f44336; margin-left: 10px;">Cancel</button>
+        </div>
+    `;
+    meetingInfo.style.display = "block";
 }
 
 function showDesktopLinkInstructions() {
@@ -147,38 +186,6 @@ function showDesktopLinkInstructions() {
                     <li>Copy the meeting link from the address bar</li>
                     <li>Paste it in the field below</li>
                 </ol>
-            </div>
-            <div class="form-group">
-                <label for="googleMeetLink">Paste Google Meet Link:</label>
-                <input type="text" id="googleMeetLink" placeholder="https://meet.google.com/xxx-xxxx-xxx" style="width: 100%; padding: 15px; margin: 10px 0;">
-            </div>
-            <button onclick="processGoogleMeetLink()" style="background: #4CAF50;">✅ Display Meeting Info</button>
-            <button onclick="resetToMain()" style="background: #f44336; margin-left: 10px;">Cancel</button>
-        </div>
-    `;
-    meetingInfo.style.display = "block";
-}
-
-function showMobileLinkInstructions() {
-    // Hide the create meeting form
-    document.getElementById("createMeetingForm").style.display = "none";
-    
-    // Show instructions for mobile users
-    const meetingInfo = document.getElementById("meetingInfo");
-    meetingInfo.innerHTML = `
-        <div class="meeting-card">
-            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">📱 Mobile Meeting Setup</h3>
-            <div class="highlight-box">
-                <p><strong>Please follow these steps:</strong></p>
-                <ol>
-                    <li>Open the Google Meet app</li>
-                    <li>Create a new meeting</li>
-                    <li>Copy the meeting link from the app</li>
-                    <li>Return here and paste the link below</li>
-                </ol>
-                <p style="text-align: center; font-weight: bold; color: #FF9800;">
-                    The meeting link must be copied manually from the Google Meet app
-                </p>
             </div>
             <div class="form-group">
                 <label for="googleMeetLink">Paste Google Meet Link:</label>
