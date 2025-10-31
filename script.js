@@ -145,19 +145,20 @@ function createMeeting(){
     const meetingInfo = document.getElementById("meetingInfo");
     meetingInfo.innerHTML = `
         <div class="meeting-card">
-            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">✅ Google Meet Opened</h3>
+            <h3 style="color: #3498db; text-align: center; margin-top: 0;">✅ ECHO-FIVE MEET</h3>
             <div class="highlight-box">
-                <p><strong>Next steps:</strong></p>
+                <p><strong>Meeting Creation Steps:</strong></p>
                 <ol>
+                    <li>Google Meet is now open in a new tab</li>
                     <li>Create your meeting in Google Meet</li>
-                    <li>Copy the meeting link</li>
-                    <li>Share it with your students</li>
+                    <li>Copy the meeting link from the address bar</li>
+                    <li>Share it with your students or parents</li>
                 </ol>
                 <p style="text-align: center; margin-top: 15px;">
-                    Use the <strong>"Join Meeting"</strong> button on the home page to join meetings.
+                    Students/Parents can use the <strong>"Join Meeting"</strong> button to connect.
                 </p>
             </div>
-            <button onclick="resetToMain()" style="background: linear-gradient(135deg, #4CAF50, #45a049); width: 100%;">OK</button>
+            <button onclick="resetToMain()" style="background: linear-gradient(135deg, #3498db, #2c3e50); width: 100%;">Continue</button>
         </div>
     `;
     meetingInfo.style.display = "block";
@@ -197,20 +198,20 @@ function joinMeeting(){
     const meetingInfo = document.getElementById("meetingInfo");
     meetingInfo.innerHTML = `
         <div class="meeting-card">
-            <h3 style="color: #4CAF50; text-align: center; margin-top: 0;">✅ Joining Meeting</h3>
+            <h3 style="color: #3498db; text-align: center; margin-top: 0;">🎓 ECHO-FIVE MEET</h3>
             
             <div class="highlight-box">
                 <p style="margin: 5px 0;"><strong>Role:</strong> ${selectedJoinRole.charAt(0).toUpperCase() + selectedJoinRole.slice(1)}</p>
             </div>
             
-            <p style="text-align: center; margin: 20px 0 10px 0; color: #555;"><strong>Meeting ID</strong></p>
+            <p style="text-align: center; margin: 20px 0 10px 0; color: #2c3e50;"><strong>Meeting ID</strong></p>
             <div class="meeting-id-display" id="joinMeetIdDisplay">${meetId}</div>
             
-            <p style="text-align: center; margin: 20px 0 10px 0; color: #555;"><strong>Meeting Link</strong></p>
+            <p style="text-align: center; margin: 20px 0 10px 0; color: #2c3e50;"><strong>Meeting Link</strong></p>
             <div class="meeting-link-display" id="joinLinkDisplay">${meetLink}</div>
             
             <div class="action-buttons">
-                <button onclick="openMeetingLink('${meetLink}')" style="background: linear-gradient(135deg, #4CAF50, #45a049);">🚀 Join Meeting Now</button>
+                <button onclick="openMeetingLink('${meetLink}')" style="background: linear-gradient(135deg, #3498db, #2c3e50);">🚀 Join Meeting Now</button>
                 <button onclick="resetToMain()" style="background: linear-gradient(135deg, #f44336, #d32f2f); width: 100%; margin-top: 10px;">Close</button>
             </div>
         </div>

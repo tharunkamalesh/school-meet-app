@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ECHO-FIVE MEET</title>
+<title>ECHO-FIVE MEET - Educational Video Conferencing</title>
 <link rel="stylesheet" href="style.css">
 
 <style>
 body { 
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
   padding: 20px; 
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
   min-height: 100vh;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: gradientShift 15s ease infinite;
+  animation: gradientShift 20s ease infinite;
   background-size: 400% 400%;
 }
 
@@ -27,9 +27,9 @@ body {
 }
 
 .container {
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   padding: 25px;
   width: 90%;
   max-width: 500px;
@@ -38,6 +38,8 @@ body {
   transform: translateY(0);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   opacity: 1;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
 }
 
 .container.fade-in {
@@ -56,9 +58,9 @@ body {
 }
 
 h2 {
-  color: #333;
-  margin-bottom: 25px;
-  font-size: 26px;
+  color: #2c3e50;
+  margin-bottom: 5px;
+  font-size: 28px;
   position: relative;
   display: inline-block;
 }
@@ -69,16 +71,16 @@ h2::after {
   bottom: -5px;
   left: 50%;
   transform: translateX(-50%);
-  width: 50px;
-  height: 3px;
-  background: linear-gradient(90deg, #4CAF50, #45a049);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #2c3e50);
   border-radius: 3px;
   animation: underlineExpand 1s ease-out;
 }
 
 @keyframes underlineExpand {
   from { width: 0; }
-  to { width: 50px; }
+  to { width: 60px; }
 }
 
 .main-buttons {
@@ -92,7 +94,7 @@ button {
   padding: 15px 20px;
   margin: 8px 0;
   cursor: pointer;
-  background: linear-gradient(135deg, #4CAF50, #45a049);
+  background: linear-gradient(135deg, #3498db, #2c3e50);
   color: white;
   border: none;
   border-radius: 8px;
@@ -112,7 +114,7 @@ button::before {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
   transition: 0.5s;
 }
 
@@ -144,8 +146,8 @@ input, select {
 
 input:focus, select:focus {
   outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
   background: white;
   transform: scale(1.01);
 }
@@ -154,7 +156,7 @@ input:focus, select:focus {
   margin-top: 20px;
   padding: 20px;
   border-radius: 10px;
-  background: #f9f9f9;
+  background: #f8f9fa;
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
   display: none;
   text-align: left;
@@ -196,7 +198,7 @@ input:focus, select:focus {
 }
 
 .meeting-info b {
-  color: #333;
+  color: #2c3e50;
   display: inline-block;
   width: 120px;
 }
@@ -224,13 +226,13 @@ input:focus, select:focus {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  color: #555;
+  color: #2c3e50;
   font-size: 16px;
   transition: color 0.3s;
 }
 
 .form-group:focus-within label {
-  color: #4CAF50;
+  color: #3498db;
 }
 
 .role-selection {
@@ -276,7 +278,7 @@ input:focus, select:focus {
 }
 
 .role-option.selected {
-  background: linear-gradient(135deg, #4CAF50, #45a049);
+  background: linear-gradient(135deg, #3498db, #2c3e50);
   color: white;
   transform: translateY(-5px) scale(1.03);
   box-shadow: 0 8px 15px rgba(0,0,0,0.2);
@@ -291,7 +293,7 @@ input:focus, select:focus {
 }
 
 .timer {
-  color: #f44336;
+  color: #e74c3c;
   font-weight: bold;
   font-size: 18px;
   margin-top: 10px;
@@ -312,7 +314,7 @@ input:focus, select:focus {
     box-shadow: 0 6px 16px rgba(0,0,0,0.1);
     padding: 25px;
     margin: 20px 0;
-    border-left: 5px solid #4CAF50;
+    border-left: 5px solid #3498db;
     animation: cardAppear 0.5s ease-out;
     position: relative;
     overflow: hidden;
@@ -336,7 +338,7 @@ input:focus, select:focus {
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg, #4CAF50, #45a049);
+  background: linear-gradient(90deg, #3498db, #2c3e50);
   transform: scaleX(0);
   transform-origin: left;
   animation: progressBar 1s ease-out forwards;
@@ -349,10 +351,10 @@ input:focus, select:focus {
 .meeting-id-display {
     font-size: 24px;
     font-weight: bold;
-    color: #333;
+    color: #2c3e50;
     text-align: center;
     padding: 15px;
-    background: #e8f5e9;
+    background: #e3f2fd;
     border-radius: 8px;
     margin: 15px 0;
     word-break: break-all;
@@ -361,15 +363,15 @@ input:focus, select:focus {
 }
 
 .meeting-id-display:hover {
-  background: #d1e7d5;
+  background: #bbdefb;
   transform: scale(1.02);
 }
 
 .meeting-link-display {
     font-size: 16px;
-    color: #555;
+    color: #2c3e50;
     padding: 15px;
-    background: #f1f8e9;
+    background: #e1f5fe;
     border-radius: 8px;
     margin: 15px 0;
     word-break: break-all;
@@ -378,13 +380,13 @@ input:focus, select:focus {
 }
 
 .meeting-link-display:hover {
-  background: #e1eed2;
+  background: #b3e5fc;
   transform: scale(1.01);
 }
 
 .highlight-box {
-    background: #fff3e0;
-    border-left: 4px solid #ff9800;
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
     padding: 15px;
     border-radius: 6px;
     margin: 15px 0;
@@ -392,7 +394,7 @@ input:focus, select:focus {
 }
 
 .highlight-box:hover {
-  background: #ffe9c7;
+  background: #ffecb3;
   transform: translateX(5px);
 }
 
@@ -404,7 +406,7 @@ input:focus, select:focus {
   }
   
   h2 {
-    font-size: 28px;
+    font-size: 30px;
   }
   
   .role-option {
@@ -429,7 +431,7 @@ input:focus, select:focus {
   }
   
   h2 {
-    font-size: 30px;
+    font-size: 32px;
   }
   
   .role-selection {
@@ -461,7 +463,7 @@ input:focus, select:focus {
   }
   
   h2 {
-    font-size: 24px;
+    font-size: 26px;
     margin-bottom: 20px;
   }
   
@@ -505,7 +507,7 @@ input:focus, select:focus {
   }
   
   h2 {
-    font-size: 22px;
+    font-size: 24px;
   }
   
   button {
@@ -541,7 +543,7 @@ input:focus, select:focus {
   }
   
   h2 {
-    font-size: 32px;
+    font-size: 34px;
   }
   
   button {
@@ -568,7 +570,8 @@ input:focus, select:focus {
 <body>
 
 <div class="container">
-  <h2>🎤 ECHO-FIVE MEET</h2>
+  <h2>🎓 ECHO-FIVE MEET</h2>
+  <p style="color: #666; margin-top: -10px; margin-bottom: 20px; font-size: 16px;">Seamless Learning Connections</p>
 
   <div class="main-buttons">
     <button onclick="showCreateOptions()">➕ Create Meeting</button>
@@ -576,7 +579,7 @@ input:focus, select:focus {
   </div>
 
   <div id="createMeetingForm">
-    <h3>Create New Meeting</h3>
+    <h3>🚀 Create New Meeting</h3>
     <div class="form-group">
       <label for="userName">Your Name:</label>
       <input type="text" id="userName" placeholder="Enter your full name">
@@ -607,7 +610,7 @@ input:focus, select:focus {
   </div>
 
   <div id="joinBox">
-    <h3>Join Existing Meeting</h3>
+    <h3>🎯 Join Existing Meeting</h3>
     <div class="form-group">
       <label for="joinLink">Meeting Link or ID:</label>
       <input type="text" id="joinLink" placeholder="Paste Meeting Link or ID">
@@ -631,6 +634,10 @@ input:focus, select:focus {
 
   <div id="meetingInfo">
     <!-- This will be populated by JavaScript -->
+  </div>
+  
+  <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; font-size: 14px; color: #777;">
+    <p>🔒 Secure • 📱 Responsive • 🎓 Educational</p>
   </div>
 </div>
 
